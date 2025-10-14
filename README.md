@@ -1,22 +1,6 @@
-### ⚠️Havent fully tested, if you are using this use in your Cation⚠️
+## ⚠️Havent fully tested, if you are using this use in your Cation⚠️
 
-```
-# Single file carving (traditional)
-python zeta_carver_pro.py disk_image.img -o ./recovered
 
-# Directory scanning
-python zeta_carver_pro.py /home/user/documents -o ./carved_files --dir-scan
-
-# Recursive scanning with pattern
-python zeta_carver_pro.py /home/user -o ./recovery --dir-scan --recursive --pattern "*.jpg"
-
-# Universal auto-detection
-python zeta_carver_pro.py /path/to/target -o ./output --universal
-
-# Safe preview mode
-python zeta_carver_pro.py disk_image.img -o ./preview --safe
-
-```
 
 
 ## Key Features of the Combined Solution:
