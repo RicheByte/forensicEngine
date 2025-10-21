@@ -1,40 +1,42 @@
-function Show-Menu {
-    Write-Host "Available Python scripts:" -ForegroundColor Blue
-    Write-Host "1) cracker.py"
-    Write-Host "2) FileCarver.py"
-    Write-Host "3) vmescapetester.py" 
-    Write-Host "4) wipier.py"
-    Write-Host "5) Show help for ALL scripts"
-    Write-Host "6) Exit"
+#!/bin/bash
+
+function show_menu {
+    echo -e "\033[34mAvailable Python scripts:\033[0m"
+    echo "1) cracker.py"
+    echo "2) FileCarver.py"
+    echo "3) vmescapetester.py"
+    echo "4) wipier.py"
+    echo "5) Show help for ALL scripts"
+    echo "6) Exit"
 }
 
-function Show-Help {
-    param($ScriptName)
-    Write-Host "=== $ScriptName help ===" -ForegroundColor Green
-    python $ScriptName --help
-    Write-Host ""
+function show_help {
+    local script_name=$1
+    echo -e "\033[32m=== $script_name help ===\033[0m"
+    python3 "$script_name" --help
+    echo
 }
 
-while ($true) {
-    Show-Menu
-    $choice = Read-Host "`nSelect an option (1-6)"
-    
-    switch ($choice) {
-        "1" { Show-Help "cracker.py" }
-        "2" { Show-Help "FileCarver.py" }
-        "3" { Show-Help "vmescapetester.py" }
-        "4" { Show-Help "wipier.py" }
-        "5" {
-            Write-Host "=== Showing help for ALL scripts ===" -ForegroundColor Yellow
-            Show-Help "cracker.py"
-            Show-Help "FileCarver.py" 
-            Show-Help "vmescapetester.py"
-            Show-Help "wipier.py"
-        }
-        "6" { 
-            Write-Host "Goodbye!" -ForegroundColor Green
-            exit 
-        }
-        default { Write-Host "Invalid option! Please select 1-6." -ForegroundColor Red }
-    }
-}
+while true; do
+    show_menu
+    read -p "Select an option (1-6): " choice
+
+    case $choice in
+        1) show_help "cracker.py" ;;
+        2) show_help "FileCarver.py" ;;
+        3) show_help "vmescapetester.py" ;;
+        4) show_help "wipier.py" ;;
+        5)
+            echo -e "\033[33m=== Showing help for ALL scripts ===\033[0m"
+            show_help "cracker.py"
+            show_help "FileCarver.py"
+            show_help "vmescapetester.py"
+            show_help "wipier.py"
+            ;;
+        6)
+            echo -e "\033[32mGoodbye!\033[0m"
+            exit 0
+            ;;
+        *) echo -e "\033[31mInvalid option! Please select 1-6.\033[0m" ;;
+    esac
+done
