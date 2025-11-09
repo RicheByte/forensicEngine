@@ -1,211 +1,257 @@
 
 
-## forensicEngine
-A comprehensive Python-based forensic analysis and post-exploitation toolkit for security researchers, penetration testers, and digital forensics professionals. This suite provides advanced capabilities for file recovery, hash analysis, VM escape testing, and log forensics.
+## Forensic Engine
 
-##  Features
+A comprehensive suite of forensic analysis and security testing tools for authorized penetration testing and security research.
 
-###  FileCarver.py - Quantum File Recovery Engine
-Advanced file carving tool with ML-enhanced confidence scoring and forensic validation.
+##  Quick Start
 
-**Key Capabilities:**
-- **Multi-format Support**: JPEG, PNG, PDF, ZIP, RAR, MP3, MP4, EXE, ELF, DOC, and more
-- **ML Confidence Scoring**: AI-inspired confidence calculation for recovered files
-- **Directory Scanning**: Recursive and non-recursive directory analysis
-- **YARA Integration**: Malware detection during recovery
-- **Entropy Analysis**: File validation through Shannon entropy calculation
-- **Parallel Processing**: Multi-threaded carving for performance
-- **SQLite Database**: Session tracking and recovery history
+### Windows (Recommended)
+Simply double-click `launcher.bat` to start the interactive menu!
 
-**Usage:**
-```bash
-# Single file carving
-python FileCarver.py disk_image.img -o ./recovered
-
-# Directory scanning (recursive)
-python FileCarver.py /path/to/data -o ./carved --dir-scan --recursive
-
-# Universal auto-detection mode
-python FileCarver.py /target -o ./output --universal --threads 8
+Or run in PowerShell:
+```powershell
+.\launcher.ps1
 ```
 
-###  cracker.py - Hash Identifier & Cracker
-Quantum cryptographic analysis platform for hash identification and password recovery.
-
-**Key Capabilities:**
-- **Hash Type Detection**: MD5, SHA1, SHA256, SHA512, BCrypt, NTLM, MySQL, JWT, and more
-- **AI-Enhanced Analysis**: Pattern recognition with confidence scoring
-- **Multiple Attack Modes**: Wordlist, rules-based, brute-force, rainbow tables
-- **Bulk Processing**: Parallel hash analysis with threading
-- **Entropy Analysis**: Shannon entropy for hash validation
-- **SQLite Tracking**: Session and result database storage
-
-**Supported Hash Types:**
-- MD5, SHA1, SHA256, SHA512
-- BCrypt, NTLM, LM Hash
-- MD5Crypt, SHA256Crypt, SHA512Crypt
-- Apache MD5, MySQL 4.1+
-- JWT tokens, Base64, Hex encoding
-
-**Usage:**
+### Linux/Mac
 ```bash
-# Identify hash type
+chmod +x why.sh
+./why.sh
+```
+
+##  Installation
+
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/RicheByte/forensicEngine.git
+   cd forensicEngine
+   ```
+
+2. **Install Python dependencies**
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+3. **Launch the tool**
+   - Windows: Double-click `launcher.bat`
+   - Linux/Mac: Run `./why.sh`
+
+##  Available Tools
+
+### 1. **cracker.py** - Hash Identifier & Cracker
+Advanced hash identification and cracking tool with ML-based pattern recognition.
+
+**Features:**
+- Identifies 15+ hash types (MD5, SHA1, SHA256, BCrypt, NTLM, etc.)
+- Multiple cracking methods (wordlist, rules, brute-force, rainbow tables)
+- AI-assisted confidence scoring
+- Bulk hash processing
+- Session tracking
+
+**Example Usage:**
+```bash
+# Identify a hash
 python cracker.py "5d41402abc4b2a76b9719d911017c592" --identify
 
-# Crack with all methods
-python cracker.py "hash_value" --crack --methods wordlist,bruteforce
+# Crack a hash
+python cracker.py "5d41402abc4b2a76b9719d911017c592" --crack
 
-# Bulk hash analysis
+# Bulk analysis
 python cracker.py hashes.txt --bulk --output ./results
 ```
 
-###  vmescapetester.py - VM Escape Vulnerability Tester
+### 2. **FileCarver.py** - Quantum File Carver
+File recovery and carving tool with ML confidence scoring and YARA scanning.
+
+**Features:**
+- Recovers 18+ file types (JPEG, PNG, PDF, ZIP, EXE, etc.)
+- ML-based confidence scoring
+- Directory scanning (recursive/non-recursive)
+- YARA malware detection
+- Entropy analysis
+- Safe mode for previewing
+
+**Example Usage:**
+```bash
+# Carve files from disk image
+python FileCarver.py disk_image.img -o ./recovered
+
+# Scan directory recursively
+python FileCarver.py /home/user/documents --dir-scan --recursive -o ./carved
+
+# Safe preview mode
+python FileCarver.py suspicious_file.bin -o ./preview --safe
+```
+
+### 3. **vmescapetester.py** - VM Escape Tester
 Hypervisor vulnerability assessment and VM escape testing platform.
 
-**Key Capabilities:**
-- **Hypervisor Detection**: VMware, VirtualBox, KVM, Hyper-V, Xen, Docker
-- **Multi-technique Fingerprinting**: CPUID, MAC address, DMI, process, file system analysis
-- **CVE Exploitation**: Tests for known VM escape vulnerabilities
-- **Side-Channel Attacks**: Spectre, Meltdown, timing analysis
-- **Memory Protection Assessment**: ASLR, SMEP, SMAP, PTI checks
-- **Comprehensive Reporting**: JSON reports with recommendations
+**Features:**
+- Detects VMware, VirtualBox, KVM, Hyper-V, Xen, Docker
+- Tests 12+ escape vectors and CVEs
+- Side-channel attack simulation
+- Memory protection assessment
+- Spectre/Meltdown detection
+- Comprehensive security reports
 
-**Tested Attack Vectors:**
-- CVE-2021-21974 (VMware vSphere RCE)
-- CVE-2020-14364 (KVM Privilege Escalation)
-- CVE-2019-3887 (Xen IOMMU Bypass)
-- Spectre/Meltdown variants
-- Memory corruption exploits
-- DMA attacks
-
-**Usage:**
+**Example Usage:**
 ```bash
 # Comprehensive assessment (safe mode)
 python vmescapetester.py --comprehensive --safe
 
-# Stealth assessment
-python vmescapetester.py --hypervisor auto --stealth
-
 # Detection only
 python vmescapetester.py --detection-only
+
+# Real testing (requires authorization)
+python vmescapetester.py --comprehensive --no-safe
 ```
 
-###  wipier.py - Log Tampering & Forensic Obfuscation
-Ethical trace obfuscation system for authorized security testing.
+### 4. **wipier.py** - Log Tamperer/Sanitizer
+Ethical log obfuscation and secure wiping tool with forensic resistance.
 
-**Key Capabilities:**
-- **Log Format Detection**: Apache, Nginx, Syslog, Auth logs, JSON
-- **Intelligent Obfuscation**: IP addresses, user agents, emails, credentials
-- **Secure Wiping**: Multi-pass forensic-resistant file deletion
-- **Batch Processing**: Parallel processing of entire log directories
-- **YARA Pattern Detection**: Identifies sensitive data for obfuscation
-- **Audit Trail**: SQLite database tracking all operations
+**Features:**
+- Obfuscates IPs, emails, passwords, tokens
+- Supports Apache, Nginx, Syslog, Auth, JSON logs
+- Multi-pass secure wiping (DoD 5220.22-M compliant)
+- Batch directory processing
+- YARA-based sensitive data detection
+- Audit trail database
 
-**Operations:**
-- **OBFUSCATE**: Replace sensitive data with realistic fake data
-- **SANITIZE**: Obfuscate then securely wipe
-- **WIPE**: Complete forensic destruction
-
-**Usage:**
+**Example Usage:**
 ```bash
-# Obfuscate single log (safe preview)
+# Obfuscate log file (safe preview)
 python wipier.py /var/log/auth.log --operation OBFUSCATE --safe
 
-# Batch directory processing
-python wipier.py /var/log --dir-scan --pattern "*.log" --recursive
+# Sanitize and wipe
+python wipier.py /var/log/apache2/access.log --operation SANITIZE --no-safe
 
-# Maximum forensic cleanup
-python wipier.py sensitive.log --operation WIPE --wipe-passes 7
+# Batch process directory
+python wipier.py /var/log --dir-scan --pattern "*.log" --operation OBFUSCATE
 ```
+
+##  Launcher Features
+
+The PowerShell launcher (`launcher.ps1`) provides:
+-  Interactive menu system with color-coded options
+-  Python environment verification
+-  Automatic package installation
+-  Help display for all tools
+-  Custom argument execution
+-  File explorer integration
+-  Error handling and user-friendly messages
+
+##  Legal Disclaimer
+
+**IMPORTANT: AUTHORIZED USE ONLY**
+
+These tools are designed for:
+- Authorized penetration testing
+- Security research and education
+- Forensic analysis with proper authorization
+- Legitimate privacy protection
+
+**You MUST have explicit authorization before using these tools on any system you do not own.**
+
+Unauthorized use may violate:
+- Computer Fraud and Abuse Act (CFAA)
+- Digital Millennium Copyright Act (DMCA)
+- State and local computer crime laws
+- International cybersecurity regulations
+
+The authors and contributors assume NO LIABILITY for misuse of these tools.
+
+##  Security Notice
+
+- Always use `--safe` mode first to preview operations
+- Create backups before running destructive operations
+- Review all command arguments carefully
+- Keep audit logs of all activities
+- Ensure proper authorization documentation
 
 ##  Requirements
 
+- **Python**: 3.7 or higher
+- **Operating System**: Windows 10/11, Linux, macOS
+- **Privileges**: Some operations may require administrator/root privileges
+- **Dependencies**: Listed in `requirements.txt`
+
+### Core Dependencies
+```
+numpy>=1.21.0
+pandas>=1.3.0
+psutil>=5.8.0
+netifaces>=0.11.0
+```
+
+### Optional Dependencies
+```
+yara-python>=4.0.0  # For pattern matching and malware detection
+```
+
+##  Educational Use
+
+This project is excellent for:
+- Learning forensic analysis techniques
+- Understanding cryptographic hash functions
+- Studying file system structures
+- Exploring VM security and hypervisor detection
+- Practicing ethical hacking methodologies
+
+##  Contributing
+
+Contributions are welcome! Please:
+1. Fork the repository
+2. Create a feature branch
+3. Make your changes with clear commit messages
+4. Test thoroughly
+5. Submit a pull request
+
+##  Documentation
+
+Each tool includes comprehensive `--help` documentation:
+```bash
+python cracker.py --help
+python FileCarver.py --help
+python vmescapetester.py --help
+python wipier.py --help
+```
+
+##  Troubleshooting
+
+### Python Not Found
+Ensure Python is installed and added to PATH:
+```bash
+python --version
+```
+
+### Missing Modules
+Install requirements:
 ```bash
 pip install -r requirements.txt
 ```
 
-**Optional Dependencies:**
-- `yara-python` - For YARA rule scanning
-- `numpy` - For ML-enhanced analysis
-- `pandas` - For advanced data processing
-- `psutil` - For system information
-- `netifaces` - For network interface detection
+### Permission Errors
+Run with elevated privileges:
+- Windows: Run as Administrator
+- Linux/Mac: Use `sudo` where appropriate
 
-##  Security Notice
-
-**FOR AUTHORIZED USE ONLY**
-
-This toolkit is designed for:
-- Authorized penetration testing
-- Digital forensics investigation
-- Security research and education
-- Incident response and recovery
-
-**Legal Disclaimer:**
-- Ensure you have **proper authorization** before using these tools
-- Unauthorized use may violate laws and regulations
-- Use responsibly and ethically
-- The authors are not responsible for misuse
-
-##  Safe Mode
-
-All tools include **Safe Mode** by default:
-- Preview operations without making changes
-- Test configurations safely
-- Verify targets before execution
-- Disable with `--no-safe` flag when authorized
-
-##  Features Overview
-
-| Tool | Purpose | Key Features |
-|------|---------|-------------|
-| FileCarver | File Recovery | ML confidence, YARA scanning, 15+ formats |
-| cracker | Hash Analysis | 15+ hash types, 4 attack modes, bulk processing |
-| vmescapetester | VM Security | CVE testing, side-channel attacks, 6+ hypervisors |
-| wipier | Log Forensics | 3 operations, smart obfuscation, batch processing |
-
-##  Advanced Configuration
-
-Each tool supports:
-- **Multi-threading**: Parallel processing for performance
-- **Database Tracking**: SQLite session management
-- **Comprehensive Reporting**: JSON output with detailed metrics
-- **Entropy Analysis**: Shannon entropy for validation
-- **Pattern Recognition**: YARA and regex-based detection
-
-##  Documentation
-
-Each tool includes detailed help:
-```bash
-python <tool>.py --help
+### PowerShell Execution Policy
+If `launcher.ps1` won't run:
+```powershell
+Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned
 ```
 
-##  Use Cases
+##  Version History
 
-- **Digital Forensics**: Recover deleted files, analyze disk images
-- **Penetration Testing**: VM escape testing, hash cracking
-- **Incident Response**: Log analysis, evidence collection
-- **Security Research**: Vulnerability assessment, cryptographic analysis
-- **Privacy Protection**: Authorized data sanitization
+- **v2.0** - PowerShell launcher with enhanced connectivity
+- **v1.0** - Initial release with bash launcher
 
-##  Ethical Guidelines
+##  Contact
 
-1. **Authorization First**: Always obtain proper authorization
-2. **Safe Mode Testing**: Test with `--safe` before actual operations
-3. **Audit Trails**: Maintain logs of all operations
-4. **Responsible Disclosure**: Report vulnerabilities responsibly
-5. **Legal Compliance**: Follow all applicable laws and regulations
+- **Author**: RicheByte
+- **Repository**: [forensicEngine](https://github.com/RicheByte/forensicEngine)
+- **Issues**: Submit via GitHub Issues
 
-
-
-##  Contributing
-
-This is a specialized security toolkit. Contributions should focus on:
-- Enhanced forensic capabilities
-- Additional hash/file format support
-- Improved ML/AI detection
-- Security vulnerability research
-
----
 
 Happy Hacking! ❤️
